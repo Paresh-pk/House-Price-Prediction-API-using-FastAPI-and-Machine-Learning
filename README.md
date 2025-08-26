@@ -62,11 +62,8 @@ uvicorn main:app --reload
 
 The API will be available at http://127.0.0.1:8000.
 
-##API Endpoint Documentation
-
+# API Endpoint Documentation
 The API provides the following endpoints:
-
-Of course! Here is a clear guide to the links for each endpoint and how to check them.
 
 ## 1. Health Endpoint
 This checks if your server is running.
