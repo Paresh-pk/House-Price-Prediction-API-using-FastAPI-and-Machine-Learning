@@ -66,44 +66,78 @@ API Endpoint Documentation
 
 The API provides the following endpoints:
 
-1. Health Check
-   
-Endpoint: GET /health
+Of course! Here is a clear guide to the links for each endpoint and how to check them.
 
-Description: Checks if the API service is running and operational.
+## 1. Health Endpoint
+This checks if your server is running.
 
-Response: A JSON object indicating the status.
+URL Link: http://127.0.0.1:8000/health
 
-{
-  "status": "ok"
-}
+How to Check: This is a GET request, so you can check it easily.
 
-2. Model Information
+Make sure your server is running in the terminal.
 
-Endpoint: GET /model-info
+Copy and paste the URL directly into your browser's address bar and press Enter.
 
-Description: Provides basic information about the machine learning model being used.
+What You Should See:
 
+JSON
 
-Response: A JSON object with the model's name and description.
+{"status":"ok"}
+## 2. Model Info Endpoint
+This gives you information about your model.
 
-{
-  "model_name": "RandomForestRegressor (California Housing)",
-  
-  "model_description": "A pipeline model including preprocessing and a Random Forest Regressor to predict median house values in California."
-}
+URL Link: http://127.0.0.1:8000/model-info
 
-3. Predict House Price
+How to Check: This is also a GET request.
 
-   
-Endpoint: POST /predict
+Make sure your server is running.
 
-Description: Predicts the median house value based on the input features provided in the request body.
+Copy and paste the URL directly into your browser's address bar and press Enter.
 
-Request Body: A JSON object containing the house features. All fields are required.
+What You Should See:
 
-Response: A JSON object with the predicted price.
+JSON
 
+{"model_name":"RandomForestRegressor (California Housing)","model_description":"A pipeline model..."}
+## 3. Predict Endpoint
+This is for making predictions and is the most important one.
+
+URL Link: http://127.0.0.1:8000/predict
+
+How to Check: This is a POST request, so you cannot just paste the URL into your browser. You must send data to it. Here are the two ways to check it:
+
+Method A: Use the Web Page (main.html)
+
+Make sure your server is running.
+
+Open your main.html file in your browser.
+
+Fill out the form with house details.
+
+Click the "Predict Price" button.
+
+The predicted price will appear on the page.
+
+Method B: Use the API Docs (Best for testing)
+
+Make sure your server is running.
+
+Go to the documentation URL: http://127.0.0.1:8000/docs
+
+Find the green POST /predict section and click on it.
+
+Click the "Try it out" button.
+
+A "Request body" text box will appear with example data.
+
+Click the blue "Execute" button.
+
+What You Should See: A successful response with a predicted price.
+
+JSON
+
+{"predicted_price": 452600.0}
 Example Requests and Responses
 
 You can interact with the API using the provided main.html file or by using a tool like curl.
