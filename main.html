@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Simple spinner animation for loading feedback */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-radius: 50%;
+            border-top: 4px solid #4f46e5; /* Indigo */
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 md:p-12 my-8">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">House Price Predictor</h1>
+            <p class="text-gray-500 mt-2">Enter the house details below to get a price prediction.</p>
+        </div>
+
+        <!-- Prediction Form -->
+        <form id="prediction-form" class="space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Longitude -->
+                <div>
+                    <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
+                    <input type="number" step="any" id="longitude" name="longitude" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="-122.23">
+                </div>
+                <!-- Latitude -->
+                <div>
+                    <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
+                    <input type="number" step="any" id="latitude" name="latitude" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="37.88">
+                </div>
+                <!-- Housing Median Age -->
+                <div>
+                    <label for="housing_median_age" class="block text-sm font-medium text-gray-700">Housing Median Age</label>
+                    <input type="number" step="any" id="housing_median_age" name="housing_median_age" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="41.0">
+                </div>
+                <!-- Total Rooms -->
+                <div>
+                    <label for="total_rooms" class="block text-sm font-medium text-gray-700">Total Rooms</label>
+                    <input type="number" step="any" id="total_rooms" name="total_rooms" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="880.0">
+                </div>
+                <!-- Total Bedrooms -->
+                <div>
+                    <label for="total_bedrooms" class="block text-sm font-medium text-gray-700">Total Bedrooms (optional)</label>
+                    <input type="number" step="any" id="total_bedrooms" name="total_bedrooms" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="129.0">
+                </div>
+                <!-- Population -->
+                <div>
+                    <label for="population" class="block text-sm font-medium text-gray-700">Population</label>
+                    <input type="number" step="any" id="population" name="population" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="322.0">
+                </div>
+                <!-- Households -->
+                <div>
+                    <label for="households" class="block text-sm font-medium text-gray-700">Households</label>
+                    <input type="number" step="any" id="households" name="households" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="126.0">
+                </div>
+                <!-- Median Income -->
+                <div>
+                    <label for="median_income" class="block text-sm font-medium text-gray-700">Median Income</label>
+                    <input type="number" step="any" id="median_income" name="median_income" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="8.3252">
+                </div>
+            </div>
+
+            <!-- Ocean Proximity -->
+            <div>
+                <label for="ocean_proximity" class="block text-sm font-medium text-gray-700">Ocean Proximity</label>
+                <select id="ocean_proximity" name="ocean_proximity" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option>NEAR BAY</option>
+                    <option>&lt;1H OCEAN</option>
+                    <option>INLAND</option>
+                    <option>NEAR OCEAN</option>
+                    <option>ISLAND</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200">
+                    <span id="button-text">Predict Price</span>
+                    <div id="loader" class="loader hidden ml-3"></div>
+                </button>
+            </div>
+        </form>
+
+        <!-- Result Display Area -->
+        <div id="result-container" class="mt-8 p-6 bg-gray-50 rounded-lg text-center hidden">
+            <h2 class="text-xl font-semibold text-gray-800">Predicted Price:</h2>
+            <p id="result" class="text-3xl font-bold text-indigo-600 mt-2"></p>
+        </div>
+        
+        <!-- Error Display Area -->
+        <div id="error-container" class="mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center hidden">
+            <p id="error-message"></p>
+        </div>
+
+    </div>
+
+    <script>
+        // DOM Elements
+        const form = document.getElementById('prediction-form');
+        const resultContainer = document.getElementById('result-container');
+        const resultElement = document.getElementById('result');
+        const errorContainer = document.getElementById('error-container');
+        const errorMessageElement = document.getElementById('error-message');
+        const buttonText = document.getElementById('button-text');
+        const loader = document.getElementById('loader');
+        const submitButton = form.querySelector('button');
+
+        // API Endpoint URL
+        // This must match the address where your FastAPI app is running.
+        const API_URL = 'http://127.0.0.1:8000/predict';
+
+        // Form submission event listener
+        form.addEventListener('submit', async (event) => {
+            // Prevent the default form action (page reload)
+            event.preventDefault();
+
+            // Hide previous results and errors
+            resultContainer.classList.add('hidden');
+            errorContainer.classList.add('hidden');
+            
+            // Show loading state on the button
+            buttonText.textContent = 'Predicting...';
+            loader.classList.remove('hidden');
+            submitButton.disabled = true;
+
+            // Get form data and convert to a plain object
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            // Convert numeric fields from strings to numbers
+            // The model expects numbers, not strings from the form.
+            for (const key in data) {
+                if (key !== 'ocean_proximity' && data[key] !== '') {
+                    data[key] = parseFloat(data[key]);
+                }
+                // Handle optional fields that might be empty
+                if (data[key] === '') {
+                    delete data[key];
+                }
+            }
+
+            try {
+                // Send data to the FastAPI backend using fetch
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                // Handle non-successful responses (e.g., 404, 500)
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || `Server error: ${response.status}`);
+                }
+
+                // Parse the successful JSON response
+                const result = await response.json();
+                
+                // Format the price as a US dollar currency string
+                const formattedPrice = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                }).format(result.predicted_price);
+
+                // Display the formatted result
+                resultElement.textContent = formattedPrice;
+                resultContainer.classList.remove('hidden');
+
+            } catch (error) {
+                // Display any errors that occurred during the fetch
+                errorMessageElement.textContent = `Error: ${error.message}`;
+                errorContainer.classList.remove('hidden');
+                console.error('Prediction failed:', error);
+            } finally {
+                // Restore the button to its original state
+                buttonText.textContent = 'Predict Price';
+                loader.classList.add('hidden');
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+
+</body>
+</html>
