@@ -66,14 +66,11 @@ The API will be available at http://127.0.0.1:8000.
 The API provides the following endpoints:
 
 ## 1. Health Endpoint
-This checks if your server is running.
-
+This checks if the server is running.
 URL Link: http://127.0.0.1:8000/health
-
 How to Check: This is a GET request, so you can check it easily.
 
 Make sure your server is running in the terminal.
-
 Copy and paste the URL directly into your browser's address bar and press Enter.
 
 What You Should See:
@@ -82,14 +79,12 @@ JSON
 
 {"status":"ok"}
 ## 2. Model Info Endpoint
-This gives you information about your model.
+This gives you information about the model.
 
 URL Link: http://127.0.0.1:8000/model-info
 
 How to Check: This is also a GET request.
-
 Make sure your server is running.
-
 Copy and paste the URL directly into your browser's address bar and press Enter.
 
 What You Should See:
